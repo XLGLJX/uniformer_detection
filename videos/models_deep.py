@@ -19,7 +19,7 @@ def return_pytorch04_xception(pretrained=True):
         model.fc = model.last_linear    
         del model.last_linear
         state_dict = torch.load(            
-            'F:/web_app/FaceForensics-Detection_Website/videos/xception-b5690688.pth')
+            'F:/web_app/uniformer_detection/videos/xception-b5690688.pth')
         for name, weights in state_dict.items():
             if 'pointwise' in name:
                 state_dict[name] = weights.unsqueeze(-1).unsqueeze(-1)
