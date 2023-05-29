@@ -1,0 +1,258 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="ch">
+
+<head>
+	<meta charset="utf-8" />
+	<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
+	<meta name="description" content="基于uniformer的人脸伪造视频检测网站" />
+	<meta name="author" content="impself" />
+
+	<title>{% block title %}{% endblock %}</title>
+
+	<!-- Bootstrap core CSS -->
+	<link href="{% static 'bootstrap/css/bootstrap.min.css' %}" rel="stylesheet" />
+
+	<!-- Custom fonts for this template -->
+	{% block css %}{% endblock %}
+	<link href="{% static 'fontawesome-free/css/all.min.css' %}" rel="stylesheet" />
+	<link href="https://fonts.googleapis.com/css?family=Varela+Round" rel="stylesheet" />
+	<link
+		href="https://fonts.googleapis.com/css?family=Nunito:200,200i,300,300i,400,400i,600,600i,700,700i,800,800i,900,900i"
+		rel="stylesheet" />
+
+	<!-- Custom styles for this template -->
+	<link href="{% static 'bootstrap/css/index.min.css' %}" rel="stylesheet" />
+</head>
+
+<body id="page-top">
+	<!-- Navigation -->
+	<nav class="navbar navbar-expand-lg  bg-secondary fixed-top" id="mainNav">
+		<div class="container">
+			<a class="navbar-brand js-scroll-trigger" style="font-weight: bolder; color: white" href="{% url 'home' %}">Uniformer-Detection</a>
+			<button class="navbar-toggler navbar-toggler-right" type="button" data-toggle="collapse"
+				data-target="#navbarResponsive" aria-controls="navbarResponsive" aria-expanded="false"
+				aria-label="Toggle navigation">
+				菜单
+				<i class="fas fa-bars"></i>
+			</button>
+			<div class="collapse navbar-collapse" id="navbarResponsive">
+				<ul class="navbar-nav ml-auto">
+					<li class="nav-item">
+						<a class="nav-link js-scroll-trigger" style="font-weight: bolder; color: white"  href="/videos/#about">关于</a>
+					</li>
+					 <li class="nav-item">
+   						 <a class="nav-link js-scroll-trigger" style="font-weight: bolder; color: white" href="../media/in_out_videos/wu_reference/KingbaseES_Clusterware配置手册.pdf" target="_blank">参考文档</a>
+					 </li>
+
+					  <li class="nav-item">
+						<a class="nav-link js-scroll-trigger" style="font-weight: bolder; color: white" href="../media/in_out_videos/wu_reference/duoxiangshihuan.mp4" target="_blank">视频演示</a>
+					  </li>
+
+					<li class="nav-item">
+
+						<a class="nav-link js-scroll-trigger" style="font-weight: bolder; color: white" href="https://github.com/yellowerhaha/uniformer_detection">Github</a>
+
+					</li>
+					<!-- <li class="nav-item">
+						<a class="nav-link js-scroll-trigger" href="#signup">Contact</a>
+					</li> -->
+					{% if user.is_authenticated %}
+					<li class="nav-item">
+						<a class="nav-link js-scroll-trigger" style="font-weight: bolder; color: white" href="">
+							{{ user.username }}
+						</a>
+					</li>
+					<li class="nav-item">
+						<a class="nav-link js-scroll-trigger" style="font-weight: bolder; color: white" href="{% url 'logout' %}">
+							退出
+						</a>
+					</li>
+					{% else %}
+					<li class="nav-item">
+						<a class="nav-link js-scroll-trigger" style="font-weight: bolder; color: white" href="{% url 'login' %}">
+							登录
+						</a>
+					</li>
+					<li class="nav-item">
+						<a class="nav-link js-scroll-trigger" style="font-weight: bolder; color: white" href="{% url 'signup' %}">
+							注册
+						</a>
+					</li>
+					{% endif %}
+				</ul>
+			</div>
+		</div>
+	</nav>
+
+	{% block header %}
+	{% endblock %}
+
+	<main>
+		{% block content %}
+		{% endblock %}
+	</main>
+
+	{% block navigation %}
+	{% endblock %}
+
+
+	<!-- Projects Section -->
+	<section id="projects" class="projects-section bg-light">
+		<div class="container">
+			<!-- Featured Project Row -->
+
+			<div class="row justify-content-center no-gutters">
+				<div class="col-lg-6">
+					<img class="img-fluid mb-3 mb-lg-0" src="{% static '../media/images/deepfake.png' %}" alt="" /> 
+				</div>
+				<div class="col-lg-6 order-lg-first">
+					<div class="bg-black text-center h-100 project">
+						<div class="d-flex h-100">
+							<div class="project-text w-100 my-auto text-center text-lg-right">
+								<h4 class="text-white"><a href="https://en.wikipedia.org/wiki/Deepfake">Deepfake</a></h4>
+								<p class="mb-0 text-white-50">
+							        Deepfakes(“深度学习”和“假货”的合成词)是合成媒体,其中现有图像或视频中的人物被替换为其他人的肖像。虽然伪造内容的行为并不新鲜,但deepfakes利用机器学习和人工智能的强大技术来操纵或生成具有很高欺骗潜力的视觉和音频内容。
+								</p>
+								<hr class="d-none d-lg-block mb-0 mr-0" />
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+
+			<!-- Project One Row -->
+			<div class="row justify-content-center no-gutters mb-5 mb-lg-0">
+				<div class="col-lg-6">
+					<img style="margin-top: 50px;" class="img-fluid" src="{% static '../media/images/framework(1).png' %}" alt="" />
+				</div>
+				<div class="col-lg-6">
+					<div class="bg-black text-center h-100 project">
+						<div class="d-flex h-100">
+							<div class="project-text w-100 my-auto text-center text-lg-left">
+								<h4 class="text-white"><a href="https://github.com/Sense-X/UniFormer">Uniformer</a></h4>
+								<p class="mb-0 text-white-50">
+									提出了将三维卷积和时空自我注意有效地统一在一种简洁的变换格式中，因此将其命名为网络统一变换(Uniformer),它可以在效率和有效性之间达到较好的平衡。具体地说,UniFormer由三个核心模块组成,即动态位置嵌入(DPE)、多头关系聚合器(MHRA)和前馈网络(FFN)。我们的UniFormer与传统视频transformer之间的关键区别在于我们的关系聚合器的独特设计。
+								</p>
+								<hr class="d-none d-lg-block mb-0 ml-0" />
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+
+			<!-- Project Two Row -->
+			<div class="row justify-content-center no-gutters">
+				<div class="col-lg-6">
+					<img style="margin-top: 50px;" class="img-fluid" src="{% static '../media/images/deepFakes.jpg' %}" alt="" />
+				</div>
+				<div class="col-lg-6 order-lg-first">
+					<div class="bg-black text-center h-100 project">
+						<div class="d-flex h-100">
+							<div class="project-text w-100 my-auto text-center text-lg-right">
+								<h4 class="text-white"><a href="https://paperswithcode.com/task/deepfake-detectionDeepFake">DeepFake Detection</a></h4>
+								<p class="mb-0 text-white-50">
+									基于Uniformer模型在图像分类上的应用,我们将其进行改进,设计出可以用来检测人脸伪造的算法。。。waiting to update
+								</p>
+								<hr class="d-none d-lg-block mb-0 mr-0" />
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</section>
+
+	<!-- Signup Section -->
+	<!-- <section id="signup" class="signup-section">
+		<div class="container">
+			<div class="row">
+				<div class="col-md-10 col-lg-8 mx-auto text-center">
+					<i class="far fa-paper-plane fa-2x mb-2 text-white"></i>
+					<h2 class="text-white mb-5">Subscribe to receive updates!</h2>
+
+					<form class="form-inline d-flex">
+						<input type="email" class="form-control flex-fill mr-0 mr-sm-2 mb-3 mb-sm-0" id="inputEmail"
+							placeholder="Enter email address..." />
+						<button type="submit" class="btn btn-primary mx-auto">
+							Subscribe
+						</button>
+					</form>
+				</div>
+			</div>
+		</div>
+	</section> -->
+
+	<!-- Contact Section -->
+	<!-- <section class="contact-section bg-black">
+		<div class="container">
+			<div class="row">
+				<div class="col-md-4 mb-3 mb-md-0">
+					<div class="card py-4 h-100">
+						<div class="card-body text-center">
+							<i class="fas fa-map-marked-alt text-primary mb-2"></i>
+							<h4 class="text-uppercase m-0">Designer</h4>
+							<hr class="my-4" />
+							<div class="small text-black-50">lgy</div>
+						</div>
+					</div>
+				</div>
+
+				<div class="col-md-4 mb-3 mb-md-0">
+					<div class="card py-4 h-100">
+						<div class="card-body text-center">
+							<i class="fas fa-envelope text-primary mb-2"></i>
+							<h4 class="text-uppercase m-0">Email</h4>
+							<hr class="my-4" />
+							<div class="small text-black-50">
+								<a href="#">hug_lgy@163.com</a>
+							</div>
+						</div>
+					</div>
+				</div>
+
+				<div class="col-md-4 mb-3 mb-md-0">
+					<div class="card py-4 h-100">
+						<div class="card-body text-center">
+							<i class="fas fa-mobile-alt text-primary mb-2"></i>
+							<h4 class="text-uppercase m-0">Phone</h4>
+							<hr class="my-4" />
+							<div class="small text-black-50">+86 17377436756</div>
+						</div>
+					</div>
+				</div>
+			</div>
+
+			<div class="social d-flex justify-content-center">
+				<a href="" class="mx-2">
+					<i class="fab fa-twitter"></i>
+				</a>
+				<a href="" class="mx-2">
+					<i class="fab fa-facebook-f"></i>
+				</a>
+				<a href="" class="mx-2">
+					<i class="fab fa-github"></i>
+				</a>
+			</div>
+		</div>
+	</section> -->
+
+	<!-- Footer -->
+	<footer class="bg-black small text-center text-white-50">
+		<div class="container">
+			Copyright &copy; impself 2023
+		</div>
+	</footer>
+
+	<!-- Bootstrap core JavaScript -->
+	<script src="{% static 'bootstrap/jquery/jquery.min.js' %}"></script>
+	<script src="{% static 'bootstrap/js/bootstrap.bundle.min.js' %}"></script>
+
+	<!-- Plugin JavaScript -->
+	<script src="{% static 'bootstrap/jquery-easing/jquery.easing.min.js' %}"></script>
+
+	<!-- Custom scripts for this template -->
+	<script src="{% static 'bootstrap/js/index.min.js' %}"></script>
+</body>
+
+</html>
