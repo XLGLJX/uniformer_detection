@@ -7,23 +7,23 @@
 <nav class="probootstrap-nav">
     <ul>
         <li class="probootstrap-animate " data-animate-effect="fadeInLeft">
-            <a href="{% url 'user_videoshow' username=user.username %}">Forged Facial Videos List</a>
+            <a href="{% url 'user_videoshow' username=user.username %}">视频列表</a>
         </li>
         <li class="probootstrap-animate  active" data-animate-effect="fadeInLeft">
-            <a href="#predict">Detection with models</a>
+            <a href="#predict">模型检测</a>
         </li>
         <!-- <li class="probootstrap-animate" data-animate-effect="fadeInLeft">
             <a href="{% url 'modelsinfo' %}">Models Result</a>
         </li> -->
         <li class="probootstrap-animate" data-animate-effect="fadeInLeft">
             {% if user.is_superuser %}
-            <a href="{% url 'admin_videoshow' adminname=user.username %}">Back</a>
+            <a href="{% url 'admin_videoshow' adminname=user.username %}">返回上页</a>
             {% else %}
-            <a href="{% url 'user_videoshow' username=user.username %}">Back</a>
+            <a href="{% url 'user_videoshow' username=user.username %}">返回上页</a>
             {% endif %}
         </li>
         <li class="probootstrap-animate" data-animate-effect="fadeInLeft">
-            <a href="{% url 'logout' %}">Log out</a>
+            <a href="{% url 'logout' %}">退出登录</a>
         </li>
     </ul>
 </nav>

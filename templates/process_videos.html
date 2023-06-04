@@ -4,16 +4,23 @@
 <nav class="probootstrap-nav">
     <ul>
         <li class="probootstrap-animate " data-animate-effect="fadeInLeft">
-            <a href="{% url 'upload_videos' %}">Upload Videos</a>
+            <a href="{% url 'upload_videos' %}">上传视频</a>
         </li>
-        <li class="probootstrap-animate active" data-animate-effect="fadeInLeft">
-            <a href="{% url 'user_videoshow' username=user.username %}">Forged Facial Videos List</a>
+
+        <li class="probootstrap-animate" data-animate-effect="fadeInLeft">
+            <details>
+                <summary>视频列表</summary>
+                <ol>
+                    <li><a href="{% url 'user_videoshow' username=user.username%}">视频示例</a></li>
+                    <li><a href="{% url 'user_videoshow' username=user.username%}">用户上传</a></li>
+                </ol>
+            </details>
         </li>
         <!-- <li class="probootstrap-animate" data-animate-effect="fadeInLeft">
             <a href="{% url 'modelsinfo' %}">Models Result</a>
         </li> -->
         <li class="probootstrap-animate" data-animate-effect="fadeInLeft">
-            <a href="{% url 'logout' %}">Log out</a>
+            <a href="{% url 'logout' %}">退出登录</a>
         </li>
     </ul>
 </nav>
@@ -33,12 +40,12 @@
     </div>
     {% empty %}
     <div >
-       <p class="text-white-50 mx-auto mt-2 mb-5" >
-        There's no video currently!
-        <p>
-        <a href="{% url 'upload_videos' %}" class="btn btn-primary js-scroll-trigger" style="position: absolute;margin-top: 5%;">
-           go to upload videos
-        </a> 
+        <p class="text-white-50 mx-auto mt-2 mb-5" style="color: #333; font-family: '微软雅黑', 'Microsoft YaHei', 'STHeiti', sans-serif;">
+            还没有视频
+        </p>
+        <a href="{% url 'upload_videos' %}" class="btn btn-primary js-scroll-trigger" style="position: absolute; margin-top: 5%;">
+            去上传视频
+        </a>
     </div>
     
     {% endfor %} 

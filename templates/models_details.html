@@ -5,7 +5,7 @@
 <nav class="probootstrap-nav">
     <ul>
         <!-- <li class="probootstrap-animate " data-animate-effect="fadeInLeft">
-            <a href="">Videos Information</a>
+            <a href="">视频信息</a>
         </li> -->
         <li class="probootstrap-animate " data-animate-effect="fadeInLeft">
             <a href="{% url 'upload_videos' %}">上传视频</a>
@@ -14,7 +14,7 @@
             <a href="{% url 'user_videoshow' username=user.username %}">视频列表</a>
         </li>
         <!-- <li class="probootstrap-animate" data-animate-effect="fadeInLeft">
-            <a href="">Detection with models</a>
+            <a href="">使用模型检测</a>
         </li> -->
         <li class="probootstrap-animate active" data-animate-effect="fadeInLeft">
             <a href="">模型结果</a>
@@ -37,34 +37,34 @@
 
 
 {% block card %}
-<h3 class="fronts">{{totallen}} frames were detected</h3>
+<h3 class="fonts"> 检测到关键帧 </h3>
 <div id="preprocessed_images" class="col-12 mt-4 mb-2">
     {% for each_image in detectImg %}
     <img src="{% static each_image %}" class="preprocess" width=auto height="250" />
     {%endfor%}
 </div>
 
-<h3 class="fronts" style="margin-top: 40px;">Choose a threshold value to show</h3>
+<h3 class="fonts" style="margin-top: 40px;">选择阈值显示</h3>
 <form action="{% url 'result' %}" method="post">
     <div style="display: flex;">
-        <p class="fronts">threshold value: </p>
+        <p class="fonts">阈值：</p>
         <span style="width: 10px;"></span>
         <input type="range" name="gs" class="slider2" id="myRange" oninput="change()" onchange="change()" style="width: 60%;">
         <span style="width: 50px;"></span>
         <input class="btn btn-primary " type="submit" style="float: none !important;height: 30px;" ></input>
     </div>
     <div style="display: flex;">
-        <p class="fronts">you choose the threshold is </p>
+        <p class="fonts">您选择的阈值为：</p>
         <span style="width: 10px;"></span>
-        <p id="demo" style="color: red;">{{yuzhi}}</p>    
+        <p id="demo" style="color: red;">{{yuzhi}}</p>
     </div>
-      
+
 </form>
 
 <div style="display: flex;">
    <p style="color:red">{{len}}</p>
    <span style="width: 10px;"></span>
-   <p class="fronts" >{{p}}</p> 
+   <p class="fonts" >{{p}}</p>
 </div>
 
 <div id="preprocessed_images" class="col-12 mt-4 mb-2">
@@ -128,4 +128,3 @@
 </script>
 
 {% endblock %}
-

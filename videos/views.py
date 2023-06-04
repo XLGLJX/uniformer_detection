@@ -313,7 +313,7 @@ def funs(request, pk, m):
     # 提取帧
     print("<=== | Started Videos Splitting | ===>")  #进行视频分隔
     frame_num = 0
-    sequence_length = 30
+    sequence_length = 60
     assert start_frame < num_frames - 1  # assert宏的原型定义在assert.h中，其作用是如果它的条件返回错误，则终止程序执行.
     end_frame = end_frame if end_frame else num_frames
     pbar = tqdm(total=end_frame - start_frame)
@@ -331,7 +331,7 @@ def funs(request, pk, m):
     # print("frame_num", frame_num)
 
 
-    # 保存30张帧用于前端展示
+    # 保存60张帧用于前端展示
     for i in range(1, min(sequence_length + 1, frame_num)):
         frame = frames[i]
         image = cv2.cvtColor(frame, cv2.COLOR_BGR2RGB)
@@ -343,6 +343,17 @@ def funs(request, pk, m):
     print("<=== | Videos Splitting Done | ===>")
 
     frame_progress = 1
+    print("global frame_progress", frame_progress)
+
+    # 脸部定位和预测同步进行
+    print("<=== | Started Face Cropping and Predicting Each Frame | ===>")
+    face_progress = 1
+    print("gloabl face_progress", face_progress)
+    pbar = tqdm(total=end_frame - start_frame)
+    i = 0
+    print("modelname", modelname)
+    outs = []
+    frame_progress = 1
     # print("global frame_progress", frame_progress)
 
     # 脸部定位和预测同步进行
@@ -352,7 +363,7 @@ def funs(request, pk, m):
     pbar = tqdm(total=end_frame - start_frame)
     i = 0
     outs = []
-   
+    
     while i < num_frames:
         image = frames[i]
         # image_suspious = frames[i]
@@ -407,15 +418,6 @@ def funs(request, pk, m):
                 img.save(image_path)
                 face_frame.append(image_name)
 
-
-                # Actual prediction using our model
-
-
-                # Actual prediction using our model
-
-            # Actual prediction using our model
-
-
             prediction, output = predict_with_model(
                 modelname,
                 cropped_face,
@@ -466,20 +468,20 @@ def funs(request, pk, m):
             # img.save(image_path)
             # face_frame.append(image_name)
             # Show
-        # print("out", outs)
-        # DetectPrediction.append(outs)
-        # # cv2.imshow("test", image)
-        # # cv2.waitKey(0)
-        # image_name = video_file_name_only + "_detect_faces_" + str(i) + '.png'
-        # image_path = "F:/web_app/uniformer_detection/preprocess_images" + image_name
-        # images = cv2.cvtColor(image, cv2.COLOR_BGR2RGB)      
-        # images = pImage.fromarray(images, 'RGB')
-        # images.save(image_path)
-        # DetectImg.append(image_name)
-        # cv2.waitKey(33)  # About 30 fps
+        print("out", outs)
+        DetectPrediction.append(outs)
+        # cv2.imshow("test", image)
+        # cv2.waitKey(0)
+        image_name = video_file_name_only + "_detect_faces_" + str(i) + '.png'
+        image_path = "F:/web_app/uniformer_detection/preprocess_images/" + image_name
+        images = cv2.cvtColor(image, cv2.COLOR_BGR2RGB)      
+        images = pImage.fromarray(images, 'RGB')
+        images.save(image_path)
+        DetectImg.append(image_name)
+        cv2.waitKey(33)  # About 30 fps
 
-        # writer.write(image)
-        # i += 1
+        writer.write(image)
+        i += 1
         # num_progress = timess * 100 / 12345666
         # print("global num_progress", num_progress)
 
@@ -490,7 +492,7 @@ def funs(request, pk, m):
         # 保存所有的预测值用于置信度阈值检测
         DetectPrediction.append(outs)
         image_name = video_file_name_only + "_detect_faces_" + str(i) + '.png'
-        image_path = "F:/web_app/uniformer_detection/detect_image/" + "_detect_faces_" + str(i) + '.png'
+        image_path = "F:/web_app/uniformer_detection/preprocess_images/" + image_name
         images = cv2.cvtColor(image, cv2.COLOR_BGR2RGB)    
         images = pImage.fromarray(images, 'RGB')    
         images.save(image_path)
