@@ -9,7 +9,7 @@ import torch
 import torch.nn as nn
 from videos.xception import xception
 import torchvision
-
+import os
 
 def return_pytorch04_xception(pretrained=True):
     # Raises warning "src not broadcastable to dst" but thats fine
@@ -19,7 +19,7 @@ def return_pytorch04_xception(pretrained=True):
         model.fc = model.last_linear    
         del model.last_linear
         state_dict = torch.load(            
-            'F:/web_app/uniformer_detection/videos/xception-b5690688.pth')
+            os.getcwd()+'/videos/xception-b5690688.pth')
         for name, weights in state_dict.items():
             if 'pointwise' in name:
                 state_dict[name] = weights.unsqueeze(-1).unsqueeze(-1)

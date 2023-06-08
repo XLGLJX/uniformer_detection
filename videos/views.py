@@ -32,6 +32,7 @@ dictionaryProgress = {}
 dictionaryProgress1 = {}
 dictionaryProgress2 = {}
 
+base_path = os.getcwd()
 
 def index(request):
     return render(request, "index.html")
@@ -287,15 +288,15 @@ def funs(request, pk, m):
     video_path = re.sub(r'\\', r'/', video_path)
     video_fn = video_path.split('/')[-1].split('.')[0] + '.mp4'
     video_file_name_only = video_path.split('/')[-1].split('.')[0]
-    output_path = "F:/web_app/uniformer_detection/media/in_out_videos/result"
-    detect_path = "F:/web_app/uniformer_detection/media/in_out_videos/result" + video_fn
+    output_path = base_path+"/media/in_out_videos/result"
+    detect_path = base_path+"/media/in_out_videos/result" + video_fn
     frame_extract = []
     face_frame = []
 
     # 模型选择
     if modelname == 'XceptionNet':
         
-        model_path = 'F:/web_app/uniformer_detection/modelsss/xception/xce.pth'
+        model_path = base_path+"/modelsss/xception/xce.pth"
 
         model, *_ = model_selection(modelname, num_out_classes=2)
         model.load_state_dict(
@@ -306,7 +307,7 @@ def funs(request, pk, m):
 
     elif modelname == "MesoInceptionNet":
 
-        model_path = "F:/web_app/uniformer_detection/modelsss/Mesonet/mesoinception.pth"
+        model_path = base_path+"/modelsss/Mesonet/mesoinception.pth"
 
         model = Meso4()
         model = nn.DataParallel(model)
@@ -315,7 +316,7 @@ def funs(request, pk, m):
                            "cuda" if torch.cuda.is_available() else "cpu")), strict=False)
 
     elif modelname == "ResNet18":
-        model_path = "F:/web_app/uniformer_detection/modelsss/resnet18/resnet.pth"
+        model_path = base_path+"/modelsss/resnet18/resnet.pth"
         model = torchvision.models.resnet18(pretrained=True)
         num = model.fc.in_features
         model.fc = nn.Linear(num, 2)
@@ -386,7 +387,7 @@ def funs(request, pk, m):
         image = cv2.cvtColor(frame, cv2.COLOR_BGR2RGB)
         img = pImage.fromarray(image, 'RGB')
         image_name = video_file_name_only + "_preprocessed_" + str(i) + '.png'
-        image_path = "F:/web_app/uniformer_detection/preprocess_images/" + image_name
+        image_path = base_path+"/preprocess_images/" + image_name
         img.save(image_path)
         frame_extract.append(image_name)
     print("<=== | Videos Splitting Done | ===>")
@@ -463,7 +464,7 @@ def funs(request, pk, m):
                 img = pImage.fromarray(image1, 'RGB')
                 image_name = video_file_name_only + "_cropped_faces_" + str(
                     i) + '.png'
-                image_path = "F:/web_app/uniformer_detection/preprocess_images/" + image_name
+                image_path = base_path+"/preprocess_images/" + image_name
                 img.save(image_path)
                 face_frame.append(image_name)
 
@@ -522,7 +523,7 @@ def funs(request, pk, m):
         # cv2.imshow("test", image)
         # cv2.waitKey(0)
         image_name = video_file_name_only + "_detect_faces_" + str(i) + '.png'
-        image_path = "F:/web_app/uniformer_detection/preprocess_images/" + image_name
+        image_path = base_path+"/preprocess_images/" + image_name
         images = cv2.cvtColor(image, cv2.COLOR_BGR2RGB)      
         images = pImage.fromarray(images, 'RGB')
         images.save(image_path)
@@ -541,7 +542,7 @@ def funs(request, pk, m):
         # 保存所有的预测值用于置信度阈值检测
         DetectPrediction.append(outs)
         image_name = video_file_name_only + "_detect_faces_" + str(i) + '.png'
-        image_path = "F:/web_app/uniformer_detection/preprocess_images/" + image_name
+        image_path = base_path+"/preprocess_images/" + image_name
         images = cv2.cvtColor(image, cv2.COLOR_BGR2RGB)    
         images = pImage.fromarray(images, 'RGB')    
         images.save(image_path)
