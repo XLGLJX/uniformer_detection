@@ -13,5 +13,3 @@ pip install -r requirements.txt
 ```
 
 - 注意修改文件内的绝对路径再运行  将文件夹内的"F:/web_app/uniformer_detection"全部改为"your path/uniformer_detection"即可
-
-
