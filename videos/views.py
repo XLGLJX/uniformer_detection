@@ -7,6 +7,7 @@ from .forms import UploadForm
 from .models import Videos_Post
 import os
 import re
+import numpy as np
 from django.http import JsonResponse
 from os.path import join
 from PIL import Image as pImage
@@ -57,7 +58,7 @@ class UserVideosView(LoginRequiredMixin, ListView):
         #     forging_method = "Original actors"
         #     b = Videos_Post(videos=videos, title=title, forging_method=forging_method, compressed_format="C40")
         #     b.save()
-        queryset = Videos_Post.objects.all().order_by('?')
+        queryset = Videos_Post.objects.all().order_by('compressed_format')
 
         return queryset
 
@@ -209,10 +210,50 @@ def predict_with_model(
 
     return int(prediction), output
 
+def lbp_basic(self,image_array):
+        basic_array=np.zeros(image_array.shape, np.uint8)
+        width=image_array.shape[0]
+        height=image_array.shape[1]
+        for i in range(1,width-1):
+            for j in range(1,height-1):
+                sum=self.calute_basic_lbp(image_array,i,j)
+                bit_num=0
+                result=0
+                for s in sum:
+                    result+=s<<bit_num
+                    bit_num+=1
+                basic_array[i,j]=result
+        return basic_array
+import numpy as np 
+import os
+from skimage import feature as ft
+import cv2
 
-
-
+img_label = {"straight": 0, "left": 1, "right": 2, "stop": 3, "nohonk": 4, "crosswalk": 5, "background": 6}
+def hog_feature(img_array, resize=(64,64)):
+    """
+    Args:
+        img_array: an image array.
+        resize: size of the image for extracture.  
+    Return:
+    features:  a ndarray vector.      
+    """
+    img = cv2.cvtColor(img_array, cv2.COLOR_BGR2GRAY)
+    img = cv2.resize(img, resize)
+    bins = 9
+    cell_size = (8, 8)
+    cpb = (2, 2)
+    norm = "L2"
+    features = ft.hog(img, orientations=bins, pixels_per_cell=cell_size, 
+                        cells_per_block=cpb, block_norm=norm, transform_sqrt=True)
+    return features
+def merge_features(lbp_features, hog_features):
+    return np.concatenate((lbp_features, hog_features))
 def funs(request, pk, m):
+
+    dictionaryProgress = {}
+    dictionaryProgress1 = {}
+    dictionaryProgress2 = {}
     # modelname = request.POST.get('models_name', )
     # pk = request.POST.get('pk', )
 
@@ -223,6 +264,11 @@ def funs(request, pk, m):
     global face_progress
     global DetectImg
     global DetectPrediction
+    num_progress = 0
+    frame_progress = 0
+    face_progress = 0
+    DetectImg = []
+    DetectPrediction = []
     modelname = m
     pk = pk
     print("modelname", modelname)
@@ -233,6 +279,9 @@ def funs(request, pk, m):
     videos = "/media/" + str(obj.videos)
     forging_method = obj.forging_method
     compressed_format = obj.compressed_format
+    print(videos)
+    print(forging_method)
+    print(compressed_format)
     video_path = os.path.dirname(os.path.dirname(
         os.path.abspath(__file__))) + videos
     video_path = re.sub(r'\\', r'/', video_path)
@@ -290,7 +339,7 @@ def funs(request, pk, m):
     #                        "cuda" if torch.cuda.is_available() else "cpu")) 
         # model = torch.load(model_path)
 
-    print('Starting: {}'.format(video_path))
+    #print('Starting: {}'.format(video_path))
 
 
     reader = cv2.VideoCapture(video_path)

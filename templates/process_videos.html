@@ -7,14 +7,8 @@
             <a href="{% url 'upload_videos' %}">上传视频</a>
         </li>
 
-        <li class="probootstrap-animate" data-animate-effect="fadeInLeft">
-            <details>
-                <summary>视频列表</summary>
-                <ol>
-                    <li><a href="{% url 'user_videoshow' username=user.username%}">视频示例</a></li>
-                    <li><a href="{% url 'user_videoshow' username=user.username%}">用户上传</a></li>
-                </ol>
-            </details>
+        <li class="probootstrap-animate active" data-animate-effect="fadeInLeft">
+            <a href="{% url 'user_videoshow' username=user.username %}">视频列表</a>
         </li>
         <!-- <li class="probootstrap-animate" data-animate-effect="fadeInLeft">
             <a href="{% url 'modelsinfo' %}">Models Result</a>
